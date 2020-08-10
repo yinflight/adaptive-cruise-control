@@ -1,5 +1,5 @@
-#ifndef PID_
-#define PID_
+#ifndef PID_H_
+#define PID_H_
 
 class PID {
 public:
@@ -39,4 +39,4 @@ private:
 
 };
 
-#endif // PID_
+#endif // PID_H_

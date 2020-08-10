@@ -1,74 +1,52 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include <vector>
 
 #include "vehicle.h"
 #include "pid.h"
 #include "acc.h"
 
-/*  init vehicles, calc dist
- *  dist > safe_dist -> speed control(), keep velocity at driver set with PID
- *  dist < safe_dist -> dist control(), set distance back to at least safe_dist with PID 
- *
- *
- *
- *
- *
- */
+ 
 
 int main(int argc, char* argv[]) {
+
+    auto lead = new vehicle("lead");
+    auto ego = new vehicle("ego");
+    auto controller = new PID();
+
+    // setpoints
+    int set_speed = 30; // kmh
+    int set_distance = 10; // m
+
+    // set PID params
+    controller->SetPID(1,1,1);
+
+    // set vehicle params
+    lead->SetSpeed(0);
+    ego->SetSpeed(0);
+    controller->SetSetpoint(set_speed);
+
+    int sim_duration = 60; // duration in seconds
+    
+    ACC acc(set_speed, set_distance); // initialize with the set values
     
 
 
+    for(int i=0; i<sim_duration; i++) {
+        // check distance between ego and lead
+        // evaluate whether it is greater than or less than set_distance 
+        // if dist > set_distance -> keep at ego speed
+        // if dist < set_distance -> slow down to hit set_distance and set new speed
+        // speed is setpoint. if lead is too slow, temp set lower cruise
+        // once cruise can be reached, apply PID to speed up
+        // evaluate PID dynamically
+        // int setpoint = cruise - speed;
+        // control = PID(setpoint)
+        // if control < 0: brakes, else: gas
 
 
-}
-
-
-
-
-
-
-
-
-
-
-
-/* 
- * run PID controller each tick
- * sim sleep for a tick
- * run sim -> vehicle type, pid controller type void Sim(vehicle* lead, vehicle* ego, pid* controller);
- * main -> duration to run sim, init vehicles, set speeds, set pid values, run threads, output values, destruct
- *
- *
- *
- *
- *
- *
- *
- *
- */ 
-
-int sim_dur; // duration of simulation in milliseconds
-double vehicle_dist; // distance between vehicles
-bool active; // wether sim is active or not
-double tick = 0.001;
-double sim_tick = 0.01;
-
-void SimSleep(double seconds) {
-    std::this_thread::sleep_for(std::chrono::milliseconds((int)(1000*seconds)));
-}
-
-
-void RunController(pid* contoller) {
-    // run controller for duration of sim
-    while (active) {
-        controller->PIDTick(tick);
-        SimSleep(tick);
     }
-}
-
-void RunSim(vehicle* lead_vehicle, vehicle* ego_vehicle, pid* controller) {
 
 
 }

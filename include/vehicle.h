@@ -3,9 +3,12 @@
 
 #include <string>
 
-
 class vehicle {
 public:
+    vehicle(const std::string& vehicle_name="") {
+        name = vehicle_name;
+    }
+
     void SetSpeed(const double& new_speed) {
         speed = new_speed;
     }
@@ -13,8 +16,6 @@ public:
     double const GetSpeed() {
         return speed;
     }
-
-    void StepSim(double dt);
 
     double const GetPosition() {
         return position;
@@ -27,6 +28,7 @@ public:
 private:
     double speed;
     double position;
+    std::string name;
 };
 
 #endif // VEHICLE_H_

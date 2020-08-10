@@ -1,12 +1,7 @@
 #include "pid.h"
 
 // constructor
-PID::PID(double P, double I, double D) {
-    this->P=P;
-    this->I=I;
-    this->D=D;
-    init();
-}
+PID::PID(double P, double I, double D) { }
 
 // initialize PID values
 void PID::init() {
