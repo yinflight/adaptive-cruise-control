@@ -3,7 +3,35 @@
 #include <chrono>
 
 #include "vehicle.h"
-#include "pid_controller.h"
+#include "pid.h"
+#include "acc.h"
+
+/*  init vehicles, calc dist
+ *  dist > safe_dist -> speed control(), keep velocity at driver set with PID
+ *  dist < safe_dist -> dist control(), set distance back to at least safe_dist with PID 
+ *
+ *
+ *
+ *
+ *
+ */
+
+int main(int argc, char* argv[]) {
+    
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
 
 
 /* 
