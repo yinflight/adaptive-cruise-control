@@ -3,32 +3,36 @@
 
 #include <string>
 
-class vehicle {
+class Vehicle {
 public:
-    vehicle(const std::string& vehicle_name="") {
-        name = vehicle_name;
-    }
+    Vehicle(const std::string);
 
-    void SetSpeed(const double& new_speed) {
-        speed = new_speed;
-    }
+    void SetInitialPosition(const double);
 
-    double const GetSpeed() {
-        return speed;
-    }
+    void SetInitialSpeed(const double);
 
-    double const GetPosition() {
-        return position;
-    }
+    double Dynamics(double, double, double);
 
-    void SetPosition(const double& new_position) {
-        position = new_position;
-    }
+    double GetPosition();
+
+    void SetPosition();
+
+    double GetSpeed();
+
+    double GetAcceleration();
+
+    void SetAcceleration(double);
 
 private:
-    double speed;
-    double position;
     std::string name;
+    const double position0;
+    const double speed0;
+    double position;
+    double speed;
+    double acceleration;
+    double gas;
+    double brake;
+    double actual_speed;
 };
 
 #endif // VEHICLE_H_
