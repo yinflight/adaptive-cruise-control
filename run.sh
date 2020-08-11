@@ -11,8 +11,8 @@ build(){
 if [[ $1 == "--build" ]]; then
     build
 elif [[ $1 == "--run" ]]; then
-    ./build/ACC | python ./testing/plot.py
+    ./build/ACC | python3 ./tests/plot.py
 else
     build
-    ./ACC | python ../testing/plot.py
+    ./ACC | python3 ../tests/plot.py
 fi

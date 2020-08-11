@@ -8,18 +8,20 @@ Adaptive cruise control (ACC) is a control system that modifies the speed of the
 .
 ├── CMakeLists.txt
 ├── README.md
-├── assets
 ├── include
-│   ├── acc.h           -> adaptive cruise control
-│   ├── pid.h           -> pid controller
-│   └── vehicle.h       -> vehicle dynamics
-├── run.sh
+│   ├── acc.h
+│   ├── pid.h
+│   └── vehicle.h
+├── plots               -> directory where the plots will be saved to
+├── run.sh              -> script to run, build, or both
 ├── src
-│   ├── acc.cc
-│   ├── main.cc
-│   └── pid.cc
+│   ├── acc.cc          -> adaptive cruise control: chooses when to adjust speed, applies PID control
+│   ├── main.cc         -> runs simulator and the adaptive cruise control for a vehicle
+│   ├── pid.cc          -> PID controller
+│   └── vehicle.cc      -> vehicle dynamics and parameters
 └── tests
-    └── plot.py
+    ├── main.py         -> plots the data read from stdout from the executable
+    └── plot.py         -> plot handler
 ```
 
 
@@ -61,6 +63,9 @@ ACC:
 
 Eigen
 
+numpy
+matplotlib
+
 ## usage
 
 to build
@@ -69,7 +74,14 @@ to build
 
 to run
 
+`./run.sh --run`
+
+to both
+
 `./run.sh`
+
+This will run the simulator for the ego and lead vehicle with adaptive cruise control applied for the former. A sinusoidal acceleration is applied to the lead vehicle to elicit a response from the ego vehicle. The output is piped to a python file for processing and plotting. These files will be saved in the plots directory.
+
 
 ## links
 * L. Bageshwar, L. Garrard and R. Rajamani "Model predictive control of transitional maneuvers for adaptive cruise control vehicles", IEEE Trans. Veh. Technol., vol. 53, no. 5, pp.1573 -1585 2004
