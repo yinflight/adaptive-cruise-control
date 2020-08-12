@@ -1,10 +1,7 @@
 #include "pid.h"
 
 // constructor
-PID::PID(double P, double I, double D) { }
-
-// initialize PID values
-void PID::init() {
+PID::PID() {
     P=0;
     I=0;
     D=0;
@@ -18,6 +15,7 @@ void PID::init() {
     last_output=0;
     first_run=true;
 }
+
 
 // set proportional value
 void PID::SetP(double P) {
@@ -108,9 +106,10 @@ bool PID::CheckBounds(double value, double min_val, double max_val) {
     return (min_val<value) && (value<max_val);
 }
 
-// check all values are positive
-void PID::CheckSigns() {
-    if(P<0) P*=-1;
-    if(I<0) I*=-1;
-    if(D<0) D*=-1;
+double PID::GetError() {
+    return error;
+}
+
+double PID::GetErrorSum() {
+    return error_sum;
 }

@@ -1,39 +1,41 @@
 #include "vehicle.h"
 #include <string>
+#include <math.h>
 
-// init and set vehicle name
-Vehicle::Vehicle(const std::string& name="") {
+// construct and set vehicle name
+Vehicle::Vehicle(const std::string& name, const double position0, const double speed0) {
     this->name=name;
+    position=position0;
+    speed=speed0;
 } 
 
+/*
 // sets initial position in global reference frame
-void Vehicle::SetInitialPosition(const double position0) {
+void Vehicle::SetInitialPosition(double position0) {
     position=position0;
 }
 
 // sets initial speed
-void Vehicle::SetInitialSpeed(const double speed0) {
+void Vehicle::SetInitialSpeed(double speed0) {
     speed=speed0;
 }
 
-// computes acceleration from ACC values
-double Vehicle::Dynamics(double actual_speed, double gas, double brake) {
-    const double g=9.81;
-    const double mass=1200.0;
-
-    // determine acceleration from speed, gas, brake, and vehicle dynamics
-
-}
-
+*/
 // get vehicle position in global reference frame
 double Vehicle::GetPosition() {
     return position;
 }
 
 // synchronizes vehicle sim clock with actual sim clock
-void Vehicle::SetPosition() {
+void Vehicle::UpdateState(double acceleration) {
+    this->acceleration=acceleration;
+
+    speed+= 1 * acceleration; // increments by tick duration * acceleration
+
+    position+=(speed*1 + 0.5 * acceleration * pow(1,2));
     // use the given speed value to compute a distance traveled value
     // distance+=speed*1; // applies speed value for 1 second
+    // find speed from acceleration
 
 }
 
@@ -45,9 +47,4 @@ double Vehicle::GetSpeed() {
 // get vehicle acceleration
 double Vehicle::GetAcceleration() {
     return acceleration;
-}
-
-// set vehicle acceleration 
-void Vehicle::SetAcceleration(double acceleration) {
-    this->acceleration=acceleration;
 }

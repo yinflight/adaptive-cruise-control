@@ -3,7 +3,7 @@
 
 class PID {
 public:
-    PID(double, double, double);
+    PID();
     void SetP(double); // set P value
     void SetI(double); // set I value
     void SetD(double); // set D value
@@ -13,19 +13,18 @@ public:
     double Compute(); // compute error term
     double Compute(double);
     double Compute(double, double);
-    void reset();
-    void init();
+    double GetError();
+    double GetErrorSum();
    
 private:
     bool CheckBounds(double, double, double);
-    void CheckSigns();
-
     double P;
     double I;
     double D;
 
     double max_error;
     double error_sum;
+    double error;
 
     double max_output;
     double min_output;

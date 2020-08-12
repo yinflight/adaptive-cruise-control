@@ -82,6 +82,8 @@ to both
 
 This will run the simulator for the ego and lead vehicle with adaptive cruise control applied for the former. A sinusoidal acceleration is applied to the lead vehicle to elicit a response from the ego vehicle. The output is piped to a python file for processing and plotting. These files will be saved in the plots directory.
 
+## to do
+* increase frequency of ticks per second to >1
 
 ## links
 * L. Bageshwar, L. Garrard and R. Rajamani "Model predictive control of transitional maneuvers for adaptive cruise control vehicles", IEEE Trans. Veh. Technol., vol. 53, no. 5, pp.1573 -1585 2004

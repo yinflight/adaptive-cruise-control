@@ -5,28 +5,20 @@
 
 class Vehicle {
 public:
-    Vehicle(const std::string);
-
-    void SetInitialPosition(const double);
-
-    void SetInitialSpeed(const double);
-
-    double Dynamics(double, double, double);
+    Vehicle(const std::string&, const double, const double);
 
     double GetPosition();
 
-    void SetPosition();
+    void UpdateState(double);
 
     double GetSpeed();
 
     double GetAcceleration();
 
-    void SetAcceleration(double);
-
 private:
     std::string name;
-    const double position0;
-    const double speed0;
+    double position0;
+    double speed0;
     double position;
     double speed;
     double acceleration;
