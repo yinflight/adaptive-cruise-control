@@ -8,11 +8,17 @@ build(){
     make -j4
 }
 
+plots(){
+    rm -rf plots
+    mkdir plots
+} 
+
 if [[ $1 == "--build" ]]; then
     build
 elif [[ $1 == "--run" ]]; then
-    ./build/ACC | python3 ./tests/plot.py
+    plots
+    ./build/ACC | python3 ./tests/main.py
 else
     build
-    ./ACC | python3 ../tests/plot.py
+    ./ACC
 fi

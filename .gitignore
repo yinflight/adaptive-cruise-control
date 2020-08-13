@@ -1,2 +1,4 @@
 build
 *.swp
+.venv
+__pycache__

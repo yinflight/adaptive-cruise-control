@@ -16,21 +16,6 @@ int main(int argc, char* argv[]) {
     Vehicle lead("lead", 30, 15);
     Vehicle ego("ego", 20, 0);
 
-//    auto lead = new vehicle("lead"); // init lead vehicle
-//    auto ego = new vehicle("ego"); // init ego vehicle
-
-    // intialize setpoiubts
-//    int set_speed = 30; // kmh, try to not vary from this
- //   int set_distance = 10; // m, min distance between ego and lead
-
-    // set vehicle initial conditions
-//    lead.SetInitialSpeed(30); // kmh
- //   lead.SetInitialPosition(15); // m from origin
-
-//    ego.SetInitialSpeed(20); // kmh
-//    ego.SetInitialPosition(0); // m from origin
-
-
     const int distance = abs(lead.GetPosition()-ego.GetPosition());
     
     ACC acc(SETSPEED, SETDISTANCE); // initialize with the set values
@@ -38,9 +23,6 @@ int main(int argc, char* argv[]) {
     // set PID params through ACC
     acc.SetPID(1,1,1);
 
-    // empty vector for sinusoidal waveform
-//    vector<int> sinusoid;
-    
     // iterate through clk
     for(int i=0; i<SIMDURATION; i++) {
 
@@ -50,10 +32,9 @@ int main(int argc, char* argv[]) {
 
         // update vehicle states
         ego.UpdateState(acc.GetAcceleration()); // updates from ACC based on applied control
-        lead.UpdateState(int(20*sin(i))); // updates from waveform
+        lead.UpdateState(int(2*sin(i)+2)); // updates from waveform
 
         std::cout << acc.GetError() << "," << acc.GetErrorSum() << "," << lead.GetSpeed() << "," << ego.GetSpeed() << "," << lead.GetAcceleration() << "," << ego.GetAcceleration() << "," << distance << std::endl;
-
 
     }
 }
