@@ -14,6 +14,8 @@ public:
     double GetError();
 
     double GetErrorSum();
+    
+    void SetBounds(double, double);
 
 private:
     double set_speed;
@@ -31,6 +33,8 @@ private:
     double error;
     double error_sum;
     double control;
+    double minimum;
+    double maximum;
 
     const double mass=1200.0;
     const double force_peak=mass*3.0;

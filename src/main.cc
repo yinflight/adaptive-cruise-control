@@ -23,6 +23,8 @@ int main(int argc, char* argv[]) {
     // set PID params through ACC
     acc.SetPID(0.15,1.0,0.0003);
 
+    acc.SetBounds(-20, 20);
+
     // iterate through clk
     for(int i=0; i<SIMDURATION; i++) {
 
@@ -40,7 +42,7 @@ int main(int argc, char* argv[]) {
 //        std::cout << "after state update" << std::endl;
  //       std::cout << "ego.GetSpeed(): " << ego.GetSpeed() << " lead.GetSpeed(): " << lead.GetSpeed() << std::endl;
 
-        std::cout << acc.GetError() << "," << acc.GetErrorSum() << "," << lead.GetSpeed() << "," << ego.GetSpeed() << "," << lead.GetAcceleration() << "," << ego.GetAcceleration() << "," << abs(lead.GetPosition()-ego.GetPosition()) << std::endl;
+//        std::cout << acc.GetError() << "," << acc.GetErrorSum() << "," << lead.GetSpeed() << "," << ego.GetSpeed() << "," << lead.GetAcceleration() << "," << ego.GetAcceleration() << "," << abs(lead.GetPosition()-ego.GetPosition()) << std::endl;
 
     }
 }
