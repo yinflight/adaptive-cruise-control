@@ -32,17 +32,15 @@ private:
     double error_sum;
     double control;
 
-    const double g=9.81;
     const double mass=1200.0;
-    const double rho=1.225;
-    const double rolling_res=0.01;
-    const double aero_cd=0.3;
-    const double force_brake_peak=mass*3.0;
+    const double force_peak=mass*3.0;
+    const double force_brake_peak=-mass*5.0;
     const double gas_peak_linear_slope=3.33;
-    const double brake_peak_linear_slope=0.2;
+    const double brake_peak_linear_slope=0.1;
+    const double power_peak=100000;
+    const double speed_base=power_peak/force_peak;
 
     double force_gas;
-    double force_peak;
     double force_brake;
     double force_resistance;
     double force;

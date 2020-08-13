@@ -1,26 +1,17 @@
 #include "vehicle.h"
+#include <iostream>
 #include <string>
 #include <math.h>
 
 // construct and set vehicle name
-Vehicle::Vehicle(const std::string& name, const double position0, const double speed0) {
+Vehicle::Vehicle(const std::string& name, const double position0, const double speed0, const double acceleration0) {
     this->name=name;
     position=position0;
     speed=speed0;
+    acceleration=acceleration0;
+//    std::cout << "Vehicle construct " << name << ", " << speed << ", " << position << std::endl;
 } 
 
-/*
-// sets initial position in global reference frame
-void Vehicle::SetInitialPosition(double position0) {
-    position=position0;
-}
-
-// sets initial speed
-void Vehicle::SetInitialSpeed(double speed0) {
-    speed=speed0;
-}
-
-*/
 // get vehicle position in global reference frame
 double Vehicle::GetPosition() {
     return position;

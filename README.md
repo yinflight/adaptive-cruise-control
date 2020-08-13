@@ -2,6 +2,11 @@
  
 Adaptive cruise control (ACC) is a control system that modifies the speed of the ego vehicle in response to conditions on the road. The ACC operates in two modes: speed control and spacing control. The control goal varies depending on which mode is set. The inter-vehicle distance is maintained with a constant value. The goal of the system is to maintain the desired distance without causing a collision, keeping the maximum acceleration and minimum deceleration within specified limits (to guarantee safety etc).
 
+customer feedback:
+
+
+"I used my error-ridden TomCo Brand cruise control and reached Mach 1.5 on my way to the market, which is 5 mins away bc I drive everywhere. Life is great!"
+
 ## file structure
 
 ```

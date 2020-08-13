@@ -5,7 +5,7 @@
 
 class Vehicle {
 public:
-    Vehicle(const std::string&, const double, const double);
+    Vehicle(const std::string&, const double, const double, const double);
 
     double GetPosition();
 
@@ -19,12 +19,12 @@ private:
     std::string name;
     double position0;
     double speed0;
+    double acceleration0;
     double position;
     double speed;
     double acceleration;
     double gas;
     double brake;
-    double actual_speed;
 };
 
 #endif // VEHICLE_H_

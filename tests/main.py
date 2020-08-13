@@ -7,9 +7,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
+
     DURATION=60
     STEP=1
-    T = np.linspace(0, DURATION-1, STEP*DURATION)
+    T = np.linspace(1, DURATION, STEP*DURATION)
+
+    SETPOINT=[30]*DURATION
+    DISTANCE=[10]*DURATION
 
     stdin_arr = []
     error = []
@@ -69,10 +73,11 @@ if __name__ == "__main__":
     # velocity
     plt.plot(T, lead_v)
     plt.plot(T, ego_v)
+    plt.plot(T, SETPOINT) 
     plt.xlabel("time (s)")
     plt.ylabel("vehicle velocity (m/s)")
     plt.title("Lead and ego vehicle velocity responses")
-    plt.legend(["lead vehicle", "ego vehicle"])
+    plt.legend(["lead vehicle", "ego vehicle", "cruise setpoint"])
     plt.savefig("plots/velocity.png")
     plt.clf()
 
@@ -90,8 +95,10 @@ if __name__ == "__main__":
 
     # distance
     plt.plot(T, dist)
+    plt.plot(T, DISTANCE)
     plt.xlabel("time (s)")
     plt.ylabel("distance (m)")
     plt.title("Distance between lead and ego vehicle over time")
+    plt.legend(["actual distance","minimum distance"])
     plt.savefig("plots/distance.png")
 
