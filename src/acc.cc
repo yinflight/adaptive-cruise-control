@@ -18,23 +18,23 @@ void ACC::SetPID(double P, double I, double D) {
 }
 
 void ACC::ApplyControl(double lead_distance, double ego_distance, double actual_speed) {
-    std::cout << "lead distance: " << lead_distance << ", " << "ego distance: " << ego_distance << std::endl;
-    std::cout << "abs distance: " << abs(lead_distance-ego_distance) << std::endl;
-    std::cout << "---------------" << std::endl;
+//    std::cout << "lead distance: " << lead_distance << ", " << "ego distance: " << ego_distance << std::endl;
+ //   std::cout << "abs distance: " << abs(lead_distance-ego_distance) << std::endl;
+  //  std::cout << "---------------" << std::endl;
 
     this->actual_speed=actual_speed;
 
     if(abs(lead_distance-ego_distance) > set_distance) {
         // minimum distance is not violated
 
-        std::cout << "dist not violated" << std::endl;
+//        std::cout << "dist not violated" << std::endl;
         setpoint = set_speed;
         
         // calculate control value
         control = controller.Compute(actual_speed, setpoint); 
 
     } else {
-        std::cout << "dist violated" << std::endl;
+//        std::cout << "dist violated" << std::endl;
         // minimum distance is violated
         setpoint = abs(set_speed-actual_speed);
         // trigger PID to act around new setpoint
@@ -61,8 +61,8 @@ void ACC::ApplyControl(double lead_distance, double ego_distance, double actual_
         brake=-control;
     }
 
-    std::cout << "setpoint: " << setpoint << ", actual speed: " << actual_speed << ", control -> " << control << std::endl;
-    std::cout << "gas: " << gas << ", " << "brake: " << brake << std::endl;
+//    std::cout << "setpoint: " << setpoint << ", actual speed: " << actual_speed << ", control -> " << control << std::endl;
+ //   std::cout << "gas: " << gas << ", " << "brake: " << brake << std::endl;
 
 
 }
@@ -80,7 +80,7 @@ double ACC::GetAcceleration() {
 
     force = force_gas + force_brake + force_resistance;
     acceleration = force / mass;
-    std::cout << "acceleration: " << acceleration << std::endl;
+   // std::cout << "acceleration: " << acceleration << std::endl;
     return acceleration;
 }
 

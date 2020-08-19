@@ -9,7 +9,7 @@
 #define SETDISTANCE 10  // minimum distance in m
 #define SIMDURATION 60  // simulation duration in s
 #define SCALE       1   // scale factor for lead acceleration sine wave
-#define SHIFT       1   // shift factor for lead acceleration sine wave
+#define SHIFT       0   // shift factor for lead acceleration sine wave
 
 int main(int argc, char* argv[]) {
 
@@ -21,7 +21,8 @@ int main(int argc, char* argv[]) {
     ACC acc(SETSPEED, SETDISTANCE); // initialize with the set values
 
     // set PID params through ACC
-    acc.SetPID(0.15,1.0,0.0003);
+    // 0.15, 0.1, 0.0
+    acc.SetPID(1,0.0,0.0);
 
     acc.SetBounds(-20, 20);
 
@@ -42,7 +43,7 @@ int main(int argc, char* argv[]) {
 //        std::cout << "after state update" << std::endl;
  //       std::cout << "ego.GetSpeed(): " << ego.GetSpeed() << " lead.GetSpeed(): " << lead.GetSpeed() << std::endl;
 
-//        std::cout << acc.GetError() << "," << acc.GetErrorSum() << "," << lead.GetSpeed() << "," << ego.GetSpeed() << "," << lead.GetAcceleration() << "," << ego.GetAcceleration() << "," << abs(lead.GetPosition()-ego.GetPosition()) << std::endl;
+        std::cout << acc.GetError() << "," << acc.GetErrorSum() << "," << lead.GetSpeed() << "," << ego.GetSpeed() << "," << lead.GetAcceleration() << "," << ego.GetAcceleration() << "," << lead.GetPosition() << "," << ego.GetPosition() << std::endl;
 
     }
 }

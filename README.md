@@ -4,8 +4,13 @@ Adaptive cruise control (ACC) is a control system that modifies the speed of the
 
 customer feedback:
 
-
 "I used my error-ridden TomCo Brand cruise control and reached Mach 1.5 on my way to the market, which is 5 mins away bc I drive everywhere. Life is great!"
+
+
+## status
+
+Right now, the controller needs to be tuned more. I have it set to purely P control as I iteratively tune, as clearly the error/total error isnt ideal. I need to do more debugging to trigger the ACC since I dont think range is being violated much. Finally, I'm not 100% sure the acceleration is properly being applied from the control response but more investigation is required. Also the README might be outdated.
+
 
 ## file structure
 
@@ -25,8 +30,7 @@ customer feedback:
 │   ├── pid.cc          -> PID controller
 │   └── vehicle.cc      -> vehicle dynamics and parameters
 └── tests
-    ├── main.py         -> plots the data read from stdout from the executable
-    └── plot.py         -> plot handler
+    └── main.py         -> plot handler
 ```
 
 
@@ -75,20 +79,23 @@ matplotlib
 
 to build
 
-`./run.sh --build`
+`./run.sh -t build`
 
 to run
 
-`./run.sh --run`
+`./run.sh -t run`
 
 to both
 
-`./run.sh`
+`./run.sh -t all`
+
+Tested on macOS 10.15
 
 This will run the simulator for the ego and lead vehicle with adaptive cruise control applied for the former. A sinusoidal acceleration is applied to the lead vehicle to elicit a response from the ego vehicle. The output is piped to a python file for processing and plotting. These files will be saved in the plots directory.
 
 ## to do
 * increase frequency of ticks per second to >1
+* LQG
 
 ## links
 * L. Bageshwar, L. Garrard and R. Rajamani "Model predictive control of transitional maneuvers for adaptive cruise control vehicles", IEEE Trans. Veh. Technol., vol. 53, no. 5, pp.1573 -1585 2004

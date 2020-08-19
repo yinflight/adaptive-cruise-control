@@ -61,8 +61,9 @@ double PID::Compute(double actual, double setpoint) {
     this->setpoint=setpoint;
 
     double error=setpoint-actual; // error
+    this->error=error;
 
-    std::cout << "error: " << error << std::endl;
+//    std::cout << "error: " << error << std::endl;
     // proportional error
     p_output=P*error; // P * current error
 
@@ -81,15 +82,15 @@ double PID::Compute(double actual, double setpoint) {
 
     // total output value
     output=p_output+i_output+d_output;
-    std::cout << "output: " << output << std::endl;
+  //  std::cout << "output: " << output << std::endl;
 
     // error sum computing
     if(min_output!=max_output && !CheckBounds(output, min_output, max_output)) {
         error_sum=error;;
-        std::cout << "min=max or bounds check failed" << std::endl;
+    //    std::cout << "min=max or bounds check failed" << std::endl;
     } else {
         error_sum+=error;
-        std::cout << "error accumulation: " << error_sum << std::endl;
+      //  std::cout << "error accumulation: " << error_sum << std::endl;
     }
 
     last_output=output;

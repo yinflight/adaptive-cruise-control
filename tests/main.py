@@ -13,7 +13,6 @@ if __name__ == "__main__":
     T = np.linspace(1, DURATION, STEP*DURATION)
 
     SETPOINT=[30]*DURATION
-    DISTANCE=[10]*DURATION
 
     stdin_arr = []
     error = []
@@ -22,7 +21,9 @@ if __name__ == "__main__":
     ego_v = []
     lead_a = []
     ego_a = []
-    dist = []
+    dist1 = []
+    dist2 = []
+
 
     for line in sys.stdin:
         # stdin: error, lead speed,e go speed, lead acceleration, ego acceleration, distance
@@ -30,26 +31,28 @@ if __name__ == "__main__":
         # split the input by ,
         stdin_arr = line.split(",")
         # idx 0 is error
-        error.append(stdin_arr[0])
+        error.append(float(stdin_arr[0]))
 
         #idx 1 is error sum
-        error_sum.append(int(float(stdin_arr[1])))
+        error_sum.append(float(stdin_arr[1]))
 
         # idx 1 is lead speed
-        lead_v.append(int(float(stdin_arr[2])))
+        lead_v.append(float(stdin_arr[2]))
 
         #idx 2 is ego speed
-        ego_v.append(int(float(stdin_arr[3])))
+        ego_v.append(float(stdin_arr[3]))
 
         # idx 3 is lead acceleration
-        lead_a.append(int(float(stdin_arr[4])))
+        lead_a.append(float(stdin_arr[4]))
 
         # idx 4 is ego acceleration
-        ego_a.append(int(float(stdin_arr[5])))
+        ego_a.append(float(stdin_arr[5]))
 
         # idx 5 is distance between vehicles
 
-        dist.append(int(float(stdin_arr[6].strip("\n"))))
+        dist1.append(float(stdin_arr[6]))
+
+        dist2.append(float(stdin_arr[7].strip("\n")))
 
     # error
     
@@ -94,11 +97,12 @@ if __name__ == "__main__":
 
 
     # distance
-    plt.plot(T, dist)
-    plt.plot(T, DISTANCE)
+    plt.plot(T, dist1)
+    plt.plot(T, dist2)
     plt.xlabel("time (s)")
     plt.ylabel("distance (m)")
     plt.title("Distance between lead and ego vehicle over time")
-    plt.legend(["actual distance","minimum distance"])
+    plt.legend(["lead vehicle", "ego vehicle"])
+    DISTANCE=[10]*DURATION
     plt.savefig("plots/distance.png")
 
