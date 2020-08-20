@@ -23,7 +23,8 @@ void Vehicle::UpdateState(double acceleration) {
 
     speed+= 1 * acceleration; // increments by tick duration * acceleration
 
-    position+=(speed*1 + 0.5 * acceleration * pow(1,2));
+//    position+=(speed*1 + 0.5 * acceleration * pow(1,2));
+    position+= 1 * speed;
     // use the given speed value to compute a distance traveled value
     // distance+=speed*1; // applies speed value for 1 second
     // find speed from acceleration

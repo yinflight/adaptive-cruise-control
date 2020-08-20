@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
 
-    DURATION=60
+    DURATION=120
     STEP=1
     T = np.linspace(1, DURATION, STEP*DURATION)
 
@@ -105,4 +105,3 @@ if __name__ == "__main__":
     plt.legend(["lead vehicle", "ego vehicle"])
     DISTANCE=[10]*DURATION
     plt.savefig("plots/distance.png")
-

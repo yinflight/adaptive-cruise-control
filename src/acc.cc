@@ -24,7 +24,7 @@ void ACC::ApplyControl(double lead_distance, double ego_distance, double actual_
 
     this->actual_speed=actual_speed;
 
-    if(abs(lead_distance-ego_distance) > set_distance) {
+    if(abs(lead_distance-ego_distance) >= set_distance) {
         // minimum distance is not violated
 
 //        std::cout << "dist not violated" << std::endl;
@@ -36,22 +36,13 @@ void ACC::ApplyControl(double lead_distance, double ego_distance, double actual_
     } else {
 //        std::cout << "dist violated" << std::endl;
         // minimum distance is violated
-        setpoint = abs(set_speed-actual_speed);
-        // trigger PID to act around new setpoint
-        control = controller.Compute(actual_speed, setpoint);
+        // apply brakes proportional to how much dist was violated
+        // make it skirt the bounds somehow
 
-       
+        control = - abs(set_distance - (lead_distance-ego_distance));
 
-      //  brake = -control;
-       // gas = 0;
     } 
 
-//    control = control*0.1;
-//    if(control>10) {
- //       control=control*0.1;
-//    } else if(control<-10) {
-//        control=control*0.1;
- //   }
 
     if(control>=0) {
         gas=control;
