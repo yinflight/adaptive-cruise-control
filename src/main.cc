@@ -7,13 +7,12 @@
 
 #define SETSPEED    30                  // setpoint ego speed in m/s
 #define SETDISTANCE 10                  // minimum distance in m
-#define AMPLITUDE   0.5 
-#define SHIFT       0 
-#define CYCLES      3
+#define AMPLITUDE   2 
+#define CYCLES      5
 #define EGOINITPOS  10
 #define LEADINITPOS 50
 #define EGOINITVEL  20
-#define LEADINITVEL 25
+#define LEADINITVEL 20
 
 int main(int argc, char* argv[]) {
 
@@ -28,7 +27,7 @@ int main(int argc, char* argv[]) {
     ACC acc(SETSPEED, SETDISTANCE);
 
     // set PID params through ACC
-    acc.SetPID(1,0.0,0.0);
+    acc.SetPID(5,2,3);
 
     // acceleration bounds for ACC response
     acc.SetBounds(-3, 3);
@@ -41,7 +40,7 @@ int main(int argc, char* argv[]) {
          */
 
         // update the lead vehicle acceleration through waveform
-        lead.UpdateState(AMPLITUDE*sin(M_PI*CYCLES*i/SIMDURATION)+SHIFT, i);
+        lead.UpdateAcceleration(AMPLITUDE*sin(M_PI*CYCLES*i/SIMDURATION), i);
 
         // decides whether to keep at ego speed or adjust to keep min distance
         // update vehicle states

@@ -20,7 +20,8 @@ void Vehicle::UpdateState(double control, int clk) {
 
     // a(t) = u / m * e ^ (-t * b / m)
     // v(t) = u / b * (1 - e ^ (-t * b / m)
-    
+    this->control=10*control;
+
     acceleration = control / mass * exp(-clk * b / mass);
     speed = control / b * (1 - exp(-clk * b / mass));
 
@@ -28,7 +29,15 @@ void Vehicle::UpdateState(double control, int clk) {
 
     // integrates speed over 1 tick
 //    position+= 1 * speed;
-    position = clk * speed;
+    position += 1 * speed;
+}
+
+void Vehicle::UpdateAcceleration(double acceleration, int clk) {
+    this->acceleration=acceleration;
+
+    control = acceleration * mass * exp(clk * b / mass);
+    speed = control / b * (1 - exp(-clk * b / mass));
+    position += 1 * speed;
 }
 
 // get vehicle speed

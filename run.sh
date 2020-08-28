@@ -33,6 +33,9 @@ main(){
     elif [[ $runtype == "all" ]]; then
         build
         ./ACC | python3 ../tests/main.py
+    else
+        echo "incorrectly supplied argument" 1>&2
+        exit 1
     fi
 }
 

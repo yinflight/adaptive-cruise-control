@@ -11,6 +11,8 @@ public:
 
     void UpdateState(double, int);
 
+    void UpdateAcceleration(double, int);
+
     double GetSpeed();
 
     double GetAcceleration();
@@ -25,7 +27,7 @@ private:
     double control;
     int clk;
     const double mass = 1200; // kg
-    const double b = 26; // Ns/m
+    const double b = 10; // Ns/m
 };
 
 #endif // VEHICLE_H_
