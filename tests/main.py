@@ -5,10 +5,11 @@ plots the error accumulation, lead vs ego speed, lead vs ego acceleration, and d
 import sys
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 
 if __name__ == "__main__":
 
-    DURATION=120
+    DURATION=int(os.environ["DUR"])
     STEP=1
     T = np.linspace(1, DURATION, STEP*DURATION)
 
@@ -23,6 +24,7 @@ if __name__ == "__main__":
     ego_a = []
     dist1 = []
     dist2 = []
+    dist = []
 
 
     for line in sys.stdin:
@@ -52,7 +54,9 @@ if __name__ == "__main__":
 
         dist1.append(float(stdin_arr[6]))
 
-        dist2.append(float(stdin_arr[7].strip("\n")))
+        dist2.append(float(stdin_arr[7]))
+
+        dist.append(float(stdin_arr[8].strip("\n")))
 
     # error
     
@@ -101,7 +105,18 @@ if __name__ == "__main__":
     plt.plot(T, dist2)
     plt.xlabel("time (s)")
     plt.ylabel("distance (m)")
-    plt.title("Distance between lead and ego vehicle over time")
+    plt.title("Distance travelled from the origin by the lead and ego vehicles")
     plt.legend(["lead vehicle", "ego vehicle"])
-    DISTANCE=[10]*DURATION
     plt.savefig("plots/distance.png")
+    plt.clf()
+
+    # abs distance
+    DISTANCE=[10]*DURATION
+    plt.plot(T, dist)
+    plt.plot(T, DISTANCE)
+    plt.xlabel("time (s)")
+    plt.ylabel("distance between vehicles (m)")
+    plt.title("Distance between lead and ego vehicles during the simulation")
+    plt.legend(["absolute distance","distance setpoint"])
+    plt.savefig("plots/absdistance.png")
+

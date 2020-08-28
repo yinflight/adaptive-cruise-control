@@ -7,9 +7,7 @@ public:
 
     void SetPID(double, double, double);
 
-    void ApplyControl(double, double, double);
-
-    double GetAcceleration();
+    double ApplyControl(double, double, double);
 
     double GetError();
 
@@ -36,18 +34,6 @@ private:
     double minimum;
     double maximum;
 
-    const double mass=1200.0;
-    const double force_peak=mass*3.0;
-    const double force_brake_peak=-mass*5.0;
-    const double gas_peak_linear_slope=3.33;
-    const double brake_peak_linear_slope=0.1;
-    const double power_peak=100000;
-    const double speed_base=power_peak/force_peak;
-
-    double force_gas;
-    double force_brake;
-    double force_resistance;
-    double force;
 };
 
 #endif // ACC_H_
