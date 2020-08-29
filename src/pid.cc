@@ -7,16 +7,12 @@ PID::PID() {
     I=0;
     D=0;
 
-    max_error=0;
     error_sum=0;
-    max_output=0;
-    min_output=0;
     setpoint=0;
     last_actual=0;
     last_output=0;
     first_run=true;
 }
-
 
 // set proportional value
 void PID::SetP(double P) {
@@ -45,12 +41,6 @@ void PID::SetSetpoint(double setpoint) {
     this->setpoint=setpoint;
 }
 
-// set limits for output
-void PID::SetOutputLimits(double minimum, double maximum) {
-    max_output=maximum;
-    min_output=minimum;
-} 
-
 // computing errors
 double PID::Compute(double actual, double setpoint) {
     double output;
@@ -63,7 +53,8 @@ double PID::Compute(double actual, double setpoint) {
     double error=setpoint-actual; // error
     this->error=error;
 
-//    std::cout << "error: " << error << std::endl;
+    error_sum+=error;
+
     // proportional error
     p_output=P*error; // P * current error
 
@@ -82,40 +73,11 @@ double PID::Compute(double actual, double setpoint) {
 
     // total output value
     output=p_output+i_output+d_output;
-  //  std::cout << "output: " << output << std::endl;
-
-    // error sum computing
-    if(min_output!=max_output && !CheckBounds(output, min_output, max_output)) {
-        error_sum=error;;
-    //    std::cout << "min=max or bounds check failed" << std::endl;
-    } else {
-        error_sum+=error;
-      //  std::cout << "error accumulation: " << error_sum << std::endl;
-    }
 
     last_output=output;
     return output;
 }
 
-// compute with no arguments
-double PID::Compute() {
-    return Compute(last_actual, setpoint);
-}
-
-// compute with only actual
-double PID::Compute(double actual) {
-    return Compute(actual, setpoint);
-}
-
-// check the value is within provided bouds
-bool PID::CheckBounds(double value, double min_val, double max_val) {
-    return (min_val<value) && (value<max_val);
-}
-
 double PID::GetError() {
     return error;
-}
-
-double PID::GetErrorSum() {
-    return error_sum;
 }

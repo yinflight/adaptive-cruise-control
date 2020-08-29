@@ -5,32 +5,32 @@
 #include "vehicle.h"
 #include "acc.h"
 
-#define SETSPEED    30                  // setpoint ego speed in m/s
-#define SETDISTANCE 10                  // minimum distance in m
-#define AMPLITUDE   2 
-#define CYCLES      5
-#define EGOINITPOS  10
-#define LEADINITPOS 50
-#define EGOINITVEL  20
-#define LEADINITVEL 20
+#define SETVELOCITY 30      // setpoint ego speed in m/s
+#define SETDISTANCE 10      // minimum distance in m
+#define AMPLITUDE   2       // lead acceleration amplitude
+#define CYCLES      5       // lead acceleration cycles
+#define EGOINITPOS  10      // initial ego position
+#define LEADINITPOS 50      // initial lead position
+#define EGOINITVEL  20      // initial ego velocity
+#define LEADINITVEL 20      // initial lead velocity
 
 int main(int argc, char* argv[]) {
 
     int SIMDURATION;
     sscanf(std::getenv("DUR"), "%d", &SIMDURATION);
 
-    // initialize vehicles with name, initial position, speed
+    // initialize vehicles with name, initial position, velocity
     Vehicle lead("lead", LEADINITPOS, LEADINITVEL);
     Vehicle ego("ego", EGOINITPOS, EGOINITVEL);
 
-    // initialize the ACC with set values    
-    ACC acc(SETSPEED, SETDISTANCE);
+    // initialize the ACC with setpoints
+    ACC acc(SETVELOCITY, SETDISTANCE);
 
     // set PID params through ACC
-    acc.SetPID(5,2,3);
+    acc.SetPID(15,10,15);
 
-    // acceleration bounds for ACC response
-    acc.SetBounds(-3, 3);
+    // acceleration bounds
+    ego.SetBounds(-3, 3);
 
     // iterate through clk
     for(int i=0; i<SIMDURATION; i++) {
@@ -40,15 +40,15 @@ int main(int argc, char* argv[]) {
          */
 
         // update the lead vehicle acceleration through waveform
-        lead.UpdateAcceleration(AMPLITUDE*sin(M_PI*CYCLES*i/SIMDURATION), i);
+        lead.UpdateStateManual(AMPLITUDE*sin(M_PI*CYCLES*i/SIMDURATION));
 
         // decides whether to keep at ego speed or adjust to keep min distance
         // update vehicle states
-        ego.UpdateState(acc.ApplyControl(lead.GetPosition(), ego.GetPosition(), ego.GetSpeed()), i);
+        ego.UpdateState(acc.ApplyControl(lead.GetPosition(), ego.GetPosition(), ego.GetVelocity()));
 ;
 
 
-        std::cout << acc.GetError() << "," << acc.GetErrorSum() << "," << lead.GetSpeed() << "," << ego.GetSpeed() << "," << lead.GetAcceleration() << "," << ego.GetAcceleration() << "," << lead.GetPosition() << "," << ego.GetPosition() << "," << abs(lead.GetPosition() - ego.GetPosition()) << std::endl;
+        std::cout << acc.GetError() << "," << acc.GetErrorSum() << "," << lead.GetVelocity() << "," << ego.GetVelocity() << "," << lead.GetAcceleration() << "," << ego.GetAcceleration() << "," << lead.GetPosition() << "," << ego.GetPosition() << "," << abs(lead.GetPosition() - ego.GetPosition()) << std::endl;
 
     }
 }

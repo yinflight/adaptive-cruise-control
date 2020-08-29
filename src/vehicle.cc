@@ -4,10 +4,8 @@
 #include <math.h>
 
 // construct and set vehicle name
-Vehicle::Vehicle(const std::string& name, const double position0, const double speed0) {
-    this->name=name;
-    position=position0;
-    speed=speed0;
+Vehicle::Vehicle(const std::string& name, const double& position0, const double& velocity0) : name(name), position(position0), velocity(velocity0) {
+//    std::cout << "[veh]: " << name << ", init vel: " << velocity << ", init pos: " << position << std::endl;
 } 
 
 // get vehicle position in global reference frame
@@ -15,37 +13,64 @@ double Vehicle::GetPosition() {
     return position;
 }
 
-// synchronizes vehicle sim clock with actual sim clock
-void Vehicle::UpdateState(double control, int clk) {
+// updates the vehicle acceleration, velocity, position with control input
+void Vehicle::UpdateState(const double& control) {
+    this->control=control;
 
-    // a(t) = u / m * e ^ (-t * b / m)
-    // v(t) = u / b * (1 - e ^ (-t * b / m)
-    this->control=10*control;
+    // control is either brake force or gas force
+    // F = ma rearranged with Fcontrol, Fdrag, Ffriction
+    acceleration = 1/mass * (control - 0.5*rho*pow(velocity,2)*A*Cd - Crr*mass*g);
 
-    acceleration = control / mass * exp(-clk * b / mass);
-    speed = control / b * (1 - exp(-clk * b / mass));
+    // check if acceleration bounds are violated
+    if(!CheckBounds(acceleration)) {
+        if(acceleration>=0) {
+            acceleration = maximum;
+//            std::cout << "bounds violated - max at " << acceleration << std::endl;
+        } else {
+            acceleration = minimum;
+//            std::cout << "bounds violated - min at " << acceleration << std::endl;
+        }
+    }
 
-//    speed+= 1 * acceleration;
+    // v = v + a * dt
+    velocity += acceleration * 1;
 
-    // integrates speed over 1 tick
-//    position+= 1 * speed;
-    position += 1 * speed;
+    // p = p + v * dt
+    position += velocity * 1;
+
+//    std::cout << "[veh]: " << name << ", acc: " << acceleration << ", vel: " << velocity << ", pos: " << position << std::endl;
 }
 
-void Vehicle::UpdateAcceleration(double acceleration, int clk) {
+// manually sets acceleration
+void Vehicle::UpdateStateManual(double acceleration) {
     this->acceleration=acceleration;
 
-    control = acceleration * mass * exp(clk * b / mass);
-    speed = control / b * (1 - exp(-clk * b / mass));
-    position += 1 * speed;
+    velocity += acceleration * 1;
+    position += velocity * 1;
+
+//    std::cout << "[veh]: " << name << ", acc: " << acceleration << ", vel: " << velocity << ", pos: " << position << std::endl;
+
 }
 
-// get vehicle speed
-double Vehicle::GetSpeed() {
-    return speed;
+// get vehicle velocity 
+double Vehicle::GetVelocity() {
+    return velocity;
 }
 
 // get vehicle acceleration
 double Vehicle::GetAcceleration() {
     return acceleration;
+}
+
+void Vehicle::SetBounds(int minimum, int maximum) {
+    this->minimum=minimum;
+    this->maximum=maximum;
+}
+
+bool Vehicle::CheckBounds(const double& acceleration) {
+    if(maximum > acceleration && minimum < acceleration) {
+        return true;
+    } else {
+        return false;
+    }
 }

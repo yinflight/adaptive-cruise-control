@@ -1,5 +1,10 @@
 # Adaptive Cruise Control with PID control
  
+
+The ACC determines the control value and passes it to the drive system which handles the vehicle dynamics and the vehicle response
+
+rewrite
+
 Adaptive cruise control (ACC) is a control system that modifies the speed of the ego vehicle in response to conditions on the road. The ACC operates in two modes: speed control and spacing control. The control goal varies depending on which mode is set. The inter-vehicle distance is maintained with a constant value. The goal of the system is to maintain the desired distance without causing a collision, keeping the maximum acceleration and minimum deceleration within specified limits (to guarantee safety etc).
 
 customer feedback:
@@ -101,3 +106,4 @@ This will run the simulator for the ego and lead vehicle with adaptive cruise co
 * L. Bageshwar, L. Garrard and R. Rajamani "Model predictive control of transitional maneuvers for adaptive cruise control vehicles", IEEE Trans. Veh. Technol., vol. 53, no. 5, pp.1573 -1585 2004
 * https://github.com/ajinkya-khade/ACC_Vehicle_MPC/blob/master/ECE.726.-.Project.Report.-.Redacted.pdf
 * https://stanford.edu/class/ee364b/lectures/mpc_slides.pdf
+* https://asawicki.info/Mirror/Car%20Physics%20for%20Games/Car%20Physics%20for%20Games.html

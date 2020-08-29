@@ -16,24 +16,20 @@ public:
     void SetBounds(double, double);
 
 private:
-    double set_speed;
+    double set_velocity;
     double set_distance;
     double P;
     double I;
     double D;
     double lead_distance;
     double ego_distance;
-    double actual_speed;
-    double gas;
-    double brake;
+    double actual_velocity;
     double setpoint;
-    double acceleration;
     double error;
     double error_sum;
     double control;
     double minimum;
     double maximum;
-
 };
 
 #endif // ACC_H_
