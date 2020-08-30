@@ -50,14 +50,16 @@ At the moment, the response isn't quite correct. The PID values need to be tuned
 
 ## requirements
 
-Eigen
+C++
+* Eigen
 
-numpy
-matplotlib
+Python
+* numpy
+* matplotlib
 
 ## usage
 
-The simulation duration must be set as an environment variable as its used within the C++ source code and the python plotting scripts. To export a duration of 30s,
+The simulation duration must be set as an environment variable as its used within the C++ source code and the python plotting scripts. To export a duration of 400s,
 
 ```
 export DUR=400
