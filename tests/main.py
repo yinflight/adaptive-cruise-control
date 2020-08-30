@@ -26,31 +26,23 @@ if __name__ == "__main__":
     dist2 = []
     dist = []
 
-
     for line in sys.stdin:
         # stdin: error, lead speed,e go speed, lead acceleration, ego acceleration, distance
 
         # split the input by ,
         stdin_arr = line.split(",")
-        # idx 0 is error
+
         error.append(float(stdin_arr[0]))
 
-        #idx 1 is error sum
         error_sum.append(float(stdin_arr[1]))
 
-        # idx 1 is lead speed
         lead_v.append(float(stdin_arr[2]))
 
-        #idx 2 is ego speed
         ego_v.append(float(stdin_arr[3]))
 
-        # idx 3 is lead acceleration
         lead_a.append(float(stdin_arr[4]))
 
-        # idx 4 is ego acceleration
         ego_a.append(float(stdin_arr[5]))
-
-        # idx 5 is distance between vehicles
 
         dist1.append(float(stdin_arr[6]))
 
@@ -59,64 +51,53 @@ if __name__ == "__main__":
         dist.append(float(stdin_arr[8].strip("\n")))
 
     # error
-    
-    plt.plot(T, error)
-    plt.xlabel("time (s)")
-    plt.ylabel("error")
-    plt.title("PID error over time")
+    fig, ax = plt.subplots(2, 1, sharex=True, constrained_layout=True)
+    ax[0].plot(T, error)
+    ax[0].set_title("PID error")
+    ax[0].set_ylabel("error")
+
+    ax[1].plot(T, error_sum)
+    ax[1].set_title("PID error accumulation")
+    ax[1].set_xlabel("time ($s$)")
+    ax[1].set_ylabel("error accumulation")
+
     plt.savefig("plots/error.png")
     plt.clf()
 
-    
-    # error sum
-    plt.plot(T, error_sum)
-    plt.xlabel("time (s)")
-    plt.ylabel("error accumulation")
-    plt.title("Total PID error over time")
-    plt.savefig("plots/total_error.png")
-    plt.clf()
+    # velocity and acceleration
+    fig, ax = plt.subplots(2, 1, sharex=True, constrained_layout=True)
+    ax[0].plot(T, lead_v)
+    ax[0].plot(T, ego_v)
+    ax[0].plot(T, SETPOINT) 
+    ax[0].set_ylabel("vehicle velocity ($m/s$)")
+    ax[0].set_title("Velocity responses")
+    ax[0].legend(["lead vehicle", "ego vehicle", "cruise setpoint (30 $m/s$)"])
 
+    ax[1].plot(T, lead_a)
+    ax[1].plot(T, ego_a)
+    ax[1].set_xlabel("time ($s$)")
+    ax[1].set_ylabel("vehicle acceleration ($m/s^2$)")
+    ax[1].set_title("Acceleration responses")
+    ax[1].legend(["lead vehicle", "ego vehicle"])
 
-    # velocity
-    plt.plot(T, lead_v)
-    plt.plot(T, ego_v)
-    plt.plot(T, SETPOINT) 
-    plt.xlabel("time (s)")
-    plt.ylabel("vehicle velocity (m/s)")
-    plt.title("Lead and ego vehicle velocity responses")
-    plt.legend(["lead vehicle", "ego vehicle", "cruise setpoint"])
-    plt.savefig("plots/velocity.png")
-    plt.clf()
-
-    
-    # acceleration
-    plt.plot(T, lead_a)
-    plt.plot(T, ego_a)
-    plt.xlabel("time (s)")
-    plt.ylabel("vehicle acceleration (m/s^2)")
-    plt.title("Lead and ego vehicle acceleration responses")
-    plt.legend(["lead vehicle", "ego vehicle"])
-    plt.savefig("plots/acceleration.png")
+    plt.savefig("plots/vel-acc-responses.png")
     plt.clf()
 
 
     # distance
-    plt.plot(T, dist1)
-    plt.plot(T, dist2)
-    plt.xlabel("time (s)")
-    plt.ylabel("distance (m)")
-    plt.title("Distance travelled from the origin by the lead and ego vehicles")
-    plt.legend(["lead vehicle", "ego vehicle"])
-    plt.savefig("plots/distance.png")
-    plt.clf()
+    fig, ax = plt.subplots(2, 1, sharex=True, constrained_layout=True)
+    ax[0].plot(T, dist1)
+    ax[0].plot(T, dist2)
+    ax[0].set_ylabel("distance ($m$)")
+    ax[0].set_title("Distance traveled from the origin")
+    ax[0].legend(["lead vehicle", "ego vehicle"])
 
-    # abs distance
     DISTANCE=[10]*DURATION
-    plt.plot(T, dist)
-    plt.plot(T, DISTANCE)
-    plt.xlabel("time (s)")
-    plt.ylabel("distance between vehicles (m)")
-    plt.title("Distance between lead and ego vehicles during the simulation")
-    plt.legend(["absolute distance","distance setpoint"])
-    plt.savefig("plots/absdistance.png")
+    ax[1].plot(T, dist)
+    ax[1].plot(T, DISTANCE)
+    ax[1].set_xlabel("time ($s$)")
+    ax[1].set_ylabel("distance between vehicles (m)")
+    ax[1].set_title("Distance between lead and ego vehicles")
+    ax[1].legend(["relative distance","distance setpoint (10 $m$)"])
+    plt.savefig("plots/distance.png")
 

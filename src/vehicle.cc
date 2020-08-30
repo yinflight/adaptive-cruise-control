@@ -5,7 +5,6 @@
 
 // construct and set vehicle name
 Vehicle::Vehicle(const std::string& name, const double& position0, const double& velocity0) : name(name), position(position0), velocity(velocity0) {
-//    std::cout << "[veh]: " << name << ", init vel: " << velocity << ", init pos: " << position << std::endl;
 } 
 
 // get vehicle position in global reference frame
@@ -25,31 +24,23 @@ void Vehicle::UpdateState(const double& control) {
     if(!CheckBounds(acceleration)) {
         if(acceleration>=0) {
             acceleration = maximum;
-//            std::cout << "bounds violated - max at " << acceleration << std::endl;
         } else {
             acceleration = minimum;
-//            std::cout << "bounds violated - min at " << acceleration << std::endl;
         }
     }
-
     // v = v + a * dt
-    velocity += acceleration * 1;
+    velocity += acceleration * 0.2;
 
     // p = p + v * dt
-    position += velocity * 1;
-
-//    std::cout << "[veh]: " << name << ", acc: " << acceleration << ", vel: " << velocity << ", pos: " << position << std::endl;
+    position += velocity * 0.2;
 }
 
 // manually sets acceleration
 void Vehicle::UpdateStateManual(double acceleration) {
     this->acceleration=acceleration;
 
-    velocity += acceleration * 1;
-    position += velocity * 1;
-
-//    std::cout << "[veh]: " << name << ", acc: " << acceleration << ", vel: " << velocity << ", pos: " << position << std::endl;
-
+    velocity += acceleration * 0.2;
+    position += velocity * 0.2;
 }
 
 // get vehicle velocity 

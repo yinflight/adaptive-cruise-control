@@ -31,6 +31,7 @@ main(){
         plots
         ./build/ACC | python3 ./tests/main.py
     elif [[ $runtype == "all" ]]; then
+        plots
         build
         ./ACC | python3 ../tests/main.py
     else

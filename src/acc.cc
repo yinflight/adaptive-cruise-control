@@ -14,7 +14,6 @@ ACC::ACC(double set_velocity, double set_distance) {
 }
 
 void ACC::SetPID(double P, double I, double D) {
-    // set PID controller values
     controller.SetPID(P,I,D);
 }
 
@@ -22,23 +21,21 @@ double ACC::ApplyControl(double lead_distance, double ego_distance, double actua
     // computes control values and decides whether to apply gas or brakes
     this->actual_velocity=actual_velocity;
 
-    if(abs(lead_distance-ego_distance) >= set_distance) {
+    if(lead_distance-ego_distance >= set_distance) {
         // minimum distance is not violated
         setpoint = set_velocity;
 
-        // calculate control value
         control = controller.Compute(actual_velocity, setpoint); 
-
-//        std::cout << "!!not violated setpoint: " << setpoint << ", control: " << control << std::endl;
 
     } else {
         // minimum distance is violated
-        // apply brakes proportional to how much dist was violated
-//        control = - abs(set_distance - (lead_distance-ego_distance));
-
-        control = controller.Compute(lead_distance-ego_distance, set_distance);
-
-//        std::cout << "!!violated control: " << control << std::endl;
+        if(lead_distance-ego_distance <= 4){
+            // collided with the lead car
+            control = -controller.Compute(0, set_distance);
+        } else {
+            // no collision
+            control = -controller.Compute(lead_distance-ego_distance, set_distance);
+        }
     } 
     return control;
 }
@@ -50,6 +47,5 @@ double ACC::GetError() {
 
 double ACC::GetErrorSum() {
     error_sum+=controller.GetError();
-//    error_sum = controller.GetErrorSum();
     return error_sum;
 }

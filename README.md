@@ -2,7 +2,20 @@
  
 Adaptive cruise control (ACC) is a control system that modifies the speed of the ego vehicle in response to conditions on the road. The ACC operates in two modes: speed control and spacing control. The control goal varies depending on which mode is set. The inter-vehicle distance is maintained with a constant value. The goal of the system is to maintain the desired distance without causing a collision, keeping the maximum acceleration and minimum deceleration within specified limits (to guarantee safety etc).
 
-I have a more thorough explanation of the model, controller, and the code as a whole on my blog post here. This README explains the file structure and how to run it.
+I have a more thorough explanation of the model, controller, and the code as a whole on my blog post here. But here are the results with P=80, I=10, D=10.
+
+
+<p align="center"><img src="https://raw.githubusercontent.com/onlycase/adaptive-cruise-control/master/plots/vel-acc-responses.png"/></p>
+
+The lead vehicle acceleration is driven by a sinusoid, which in turn drives the velocity. The ego vehicle oscillates somewhat but converges on the cruise setpoint although it is quite slow.
+
+<p align="center"><img src="https://raw.githubusercontent.com/onlycase/adaptive-cruise-control/master/plots/distance.png"/></p>
+
+Observing the distance traveled from the origin, the area between the curves at any instantaneous point signifies their distance. At the points where the curves seem to touch, the distance was nearly violated and the adaptive cruise controller responded. The second plot oscillates as the lead vehicle tends to do so.
+
+<p align="center"><img src="https://raw.githubusercontent.com/onlycase/adaptive-cruise-control/master/plots/error.png"/></p>
+
+The error values drive the PID output. Ideally the error converges to zero and the error accumulation should reduce in growth over time, as observed.
 
 
 ## file structure
@@ -47,7 +60,7 @@ matplotlib
 The simulation duration must be set as an environment variable as its used within the C++ source code and the python plotting scripts. To export a duration of 30s,
 
 ```
-export DUR=30
+export DUR=400
 ```
 
 to build
@@ -65,8 +78,6 @@ to both
 Tested on macOS 10.15
 
 ## to do
-* better plotting (with subplots)
-* tune PID values better
 * checks if environment variable is not present
 * checks if other values arent set
 

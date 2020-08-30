@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
     ACC acc(SETVELOCITY, SETDISTANCE);
 
     // set PID params through ACC
-    acc.SetPID(15,10,15);
+    acc.SetPID(80,10,10);
 
     // acceleration bounds
     ego.SetBounds(-3, 3);
@@ -39,6 +39,8 @@ int main(int argc, char* argv[]) {
          * ego: set acc through ACC, compute vel, compute dist
          */
 
+        double j = i/5.0;
+
         // update the lead vehicle acceleration through waveform
         lead.UpdateStateManual(AMPLITUDE*sin(M_PI*CYCLES*i/SIMDURATION));
 
@@ -47,8 +49,7 @@ int main(int argc, char* argv[]) {
         ego.UpdateState(acc.ApplyControl(lead.GetPosition(), ego.GetPosition(), ego.GetVelocity()));
 ;
 
-
-        std::cout << acc.GetError() << "," << acc.GetErrorSum() << "," << lead.GetVelocity() << "," << ego.GetVelocity() << "," << lead.GetAcceleration() << "," << ego.GetAcceleration() << "," << lead.GetPosition() << "," << ego.GetPosition() << "," << abs(lead.GetPosition() - ego.GetPosition()) << std::endl;
+        std::cout << acc.GetError() << "," << acc.GetErrorSum() << "," << lead.GetVelocity() << "," << ego.GetVelocity() << "," << lead.GetAcceleration() << "," << ego.GetAcceleration() << "," << lead.GetPosition() << "," << ego.GetPosition() << "," << lead.GetPosition() - ego.GetPosition() << std::endl;
 
     }
 }
