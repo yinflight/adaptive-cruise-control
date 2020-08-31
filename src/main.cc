@@ -51,5 +51,6 @@ int main(int argc, char* argv[]) {
 
         std::cout << acc.GetError() << "," << acc.GetErrorSum() << "," << lead.GetVelocity() << "," << ego.GetVelocity() << "," << lead.GetAcceleration() << "," << ego.GetAcceleration() << "," << lead.GetPosition() << "," << ego.GetPosition() << "," << lead.GetPosition() - ego.GetPosition() << std::endl;
 
+
     }
 }
